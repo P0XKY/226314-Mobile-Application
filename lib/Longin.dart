@@ -23,15 +23,34 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightBlue[50],
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        child: Container(
+          width: 350,
+          height: 430,
+          padding: const EdgeInsets.all(15.15), // ระยะห่างภายในกล่อง
+          decoration: BoxDecoration(
+            color: Colors.white, // สีพื้นหลังของกล่อง
+            borderRadius: BorderRadius.circular(16.0), // มุมโค้ง
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), // เงา
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: const Offset(0, 3), // ตำแหน่งเงา
+              ),
+            ],
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
                 'Sing in',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
+                style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                ),
               ),
               const SizedBox(height: 30),
               TextField(
@@ -52,7 +71,12 @@ class LoginPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ForgotPage()),
+                    );
+                  },
                   child: const Text('Forgot password?'),
                 ),
               ),
@@ -94,9 +118,24 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightBlue[50],
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        child: Container(
+          width: 350,
+          height: 600,
+          padding: const EdgeInsets.all(15.15), // ระยะห่างภายในกล่อง
+          decoration: BoxDecoration(
+            color: Colors.white, // สีพื้นหลังของกล่อง
+            borderRadius: BorderRadius.circular(16.0), // มุมโค้ง
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), // เงา
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: const Offset(0, 3), // ตำแหน่งเงา
+              ),
+            ],
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -157,6 +196,150 @@ class SignUpPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
+                    },
+                    child: const Text('Sing in'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ForgotPage extends StatelessWidget {
+  const ForgotPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Forgot Password'),
+      ),
+      backgroundColor: Colors.lightBlue[50],
+      body: Center(
+        child: Container(
+          width: 350,
+          height: 220,
+          padding: const EdgeInsets.all(15.15), // ระยะห่างภายในกล่อง
+          decoration: BoxDecoration(
+            color: Colors.white, // สีพื้นหลังของกล่อง
+            borderRadius: BorderRadius.circular(16.0), // มุมโค้ง
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), // เงา
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: const Offset(0, 3), // ตำแหน่งเงา
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Reset Your Password',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: 'Enter your email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ResetPage()),
+                      );
+                  },
+                  child: const Text('Submit'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ResetPage extends StatelessWidget {
+  const ResetPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.lightBlue[50],
+      body: Center(
+        child: Container(
+          width: 350,
+          height: 450,
+          padding: const EdgeInsets.all(15.15), // ระยะห่างภายในกล่อง
+          decoration: BoxDecoration(
+            color: Colors.white, // สีพื้นหลังของกล่อง
+            borderRadius: BorderRadius.circular(16.0), // มุมโค้ง
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), // เงา
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: const Offset(0, 3), // ตำแหน่งเงา
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Reset Password',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'New Password',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Confirm password',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Confirm'),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Have an account?"),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
                     },
                     child: const Text('Sing in'),
                   ),
