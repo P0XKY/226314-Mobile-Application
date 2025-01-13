@@ -16,20 +16,20 @@ class Home extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.all(16),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'คุณภาพอากาศ',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children:  [
                         Text(
                           '40',
                           style: TextStyle(
@@ -43,7 +43,7 @@ class Home extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Text(
+                     Text(
                       'ดี',
                       style: TextStyle(
                           fontSize: 32,
@@ -58,7 +58,7 @@ class Home extends StatelessWidget {
           const SizedBox(height: 16),
 
           // การ์ดแสดงข้อมูล
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const [
               InfoCard(
@@ -87,12 +87,12 @@ class Home extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.all(16),
-            child: Row(
+            child: const Row(
               children: [
-                const Icon(Icons.person, color: Colors.green, size: 48),
-                const SizedBox(width: 16),
+                Icon(Icons.person, color: Colors.green, size: 48),
+                SizedBox(width: 16),
                 Expanded(
-                  child: const Text(
+                  child: Text(
                     'คุณภาพอากาศน่าพึงพอใจและไม่มีความเสี่ยง',
                     style: TextStyle(fontSize: 16),
                   ),
