@@ -20,16 +20,16 @@ class PhayaoAirPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
-          'Phayao Air',
+        title:const Text(
+        'Phayao Air',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Container(
@@ -37,19 +37,19 @@ class PhayaoAirPage extends StatelessWidget {
                 color: Colors.green[100],
                 borderRadius: BorderRadius.circular(12),
               ),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'คุณภาพอากาศ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  const Text(
+                  'คุณภาพอากาศ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -77,7 +77,7 @@ class PhayaoAirPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -98,20 +98,20 @@ class PhayaoAirPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'อัปเดตล่าสุด 1 มกราคม 2025\nเวลา 15:00 น.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
               decoration: BoxDecoration(
                 color: Colors.green[100],
                 borderRadius: BorderRadius.circular(12),
               ),
-              padding: EdgeInsets.all(16),
-              child: Row(
+              padding:const EdgeInsets.all(16),
+              child:const Row(
                 children: [
                   Icon(Icons.person, color: Colors.green, size: 48),
                   SizedBox(width: 16),
@@ -128,7 +128,7 @@ class PhayaoAirPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'ประวัติ',
@@ -169,16 +169,16 @@ class InfoCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, size: 32, color: Colors.blue),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             title,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             value,
-            style: TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14),
             textAlign: TextAlign.center,
           ),
         ],
