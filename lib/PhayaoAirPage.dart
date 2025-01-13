@@ -111,7 +111,8 @@ class PhayaoAirPage extends StatelessWidget {
                 color: Colors.green[100],
                 borderRadius: BorderRadius.circular(12),
               ),
-              padding:const EdgeInsets.all(16),
+              margin: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+              padding:const EdgeInsets.all(40),
               child:const Row(
                 children: [
                   Icon(Icons.person, color: Colors.green, size: 48),
@@ -163,7 +164,8 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
+      width: 110,
+      margin: EdgeInsets.fromLTRB(6, 0, 6, 0),
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey[100],
@@ -176,7 +178,7 @@ class InfoCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 4),
