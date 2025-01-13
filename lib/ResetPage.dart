@@ -1,27 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'ForgotPage.dart';
-import 'signupPage.dart';
+import 'Longin.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const LoginPage(),
-    );
-  }
-}
-
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class ResetPage extends StatelessWidget {
+  const ResetPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +12,7 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: Container(
           width: 350,
-          height: 430,
+          height: 450,
           padding: const EdgeInsets.all(15.15), // ระยะห่างภายในกล่อง
           decoration: BoxDecoration(
             color: Colors.white, // สีพื้นหลังของกล่อง
@@ -45,20 +27,17 @@ class LoginPage extends StatelessWidget {
             ],
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Sing in',
-                style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                ),
+                'Reset Password',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
               ),
               const SizedBox(height: 30),
               TextField(
+                obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'New Password',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
                 ),
               ),
@@ -66,21 +45,8 @@ class LoginPage extends StatelessWidget {
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Password',
+                  labelText: 'Confirm password',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ForgotPage()),
-                    );
-                  },
-                  child: const Text('Forgot password?'),
                 ),
               ),
               const SizedBox(height: 16),
@@ -88,22 +54,22 @@ class LoginPage extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: const Text('Log in'),
+                  child: const Text('Confirm'),
                 ),
               ),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don’t have an account?"),
+                  const Text("Have an account?"),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SignUpPage()),
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
                       );
                     },
-                    child: const Text('Sing up'),
+                    child: const Text('Sing in'),
                   ),
                 ],
               ),
@@ -114,7 +80,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
