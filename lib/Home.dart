@@ -1,45 +1,151 @@
-import 'package:application/main.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-          title: const Text("Phayao Air"),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-        ),
-        body: const Home(),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'ประวัติ',
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          // กล่องคุณภาพอากาศ
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green[100],
+              borderRadius: BorderRadius.circular(12),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'คุณภาพอากาศ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          '40',
+                          style: TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green),
+                        ),
+                        Text(
+                          'AQI',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      'ดี',
+                      style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'ตั้งค่า',
+          ),
+          const SizedBox(height: 16),
+
+          // การ์ดแสดงข้อมูล
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              InfoCard(
+                icon: Icons.cloud,
+                title: 'PM 2.5',
+                value: '4.9 µg/m³',
+              ),
+              InfoCard(
+                icon: Icons.thermostat,
+                title: 'Temperature',
+                value: '32 °C',
+              ),
+              InfoCard(
+                icon: Icons.water_drop,
+                title: 'Humidity',
+                value: '52%',
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // คำแนะนำ
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green[100],
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
-          selectedItemColor: Colors.blueAccent,
-          unselectedItemColor: Colors.black,
-        ),
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                const Icon(Icons.person, color: Colors.green, size: 48),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: const Text(
+                    'คุณภาพอากาศน่าพึงพอใจและไม่มีความเสี่ยง',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
+// การ์ดแสดงข้อมูลย่อย
+class InfoCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String value;
 
+  const InfoCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 32, color: Colors.blue),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 14),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
