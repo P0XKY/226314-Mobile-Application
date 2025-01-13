@@ -1,10 +1,17 @@
+import 'package:application/AQIPage.dart';
+import 'package:application/Notification.dart';
+import 'package:application/contact.dart';
 import 'package:flutter/material.dart';
 
-import 'AQIPage.dart';
-import 'contact.dart';
+
 
 
 class AdditionalPage extends StatelessWidget {
+  final pages = [
+    '/history', // เส้นทางของหน้าประวัติ
+    '/',        // เส้นทางของหน้าหลัก
+    '/more',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,11 +24,12 @@ class AdditionalPage extends StatelessWidget {
           ],
         ),
         actions: [
-          CircleAvatar(
-            backgroundColor: Colors.grey[300],
-            child: const Icon(Icons.person, color: Colors.blue),
+          IconButton(
+            icon: const Icon(Icons.person, color: Colors.black),
+            onPressed: () {
+              Navigator.pushNamed(context, '/Login');
+            },
           ),
-          const SizedBox(width: 8),
         ],
         bottom: PreferredSize(
           preferredSize:const Size.fromHeight(1.0),
@@ -63,7 +71,10 @@ class AdditionalPage extends StatelessWidget {
             leading: const Icon(Icons.notifications, color: Colors.orange),  // Added color here
             trailing: const Icon(Icons.arrow_forward, color: Colors.green),  // Added color here
             onTap: () {
-              // Navigate to the notification settings page (to be created)
+              Navigator.push(
+                  context,
+              MaterialPageRoute(builder: (context) => const NotificationSettingsPage()),
+              );
             },
           ),
           const Divider(),
@@ -107,6 +118,7 @@ class AdditionalPage extends StatelessWidget {
         currentIndex: 1,
         onTap: (index) {
           // Handle navigation (if needed)
+          Navigator.pushNamed(context, pages[index]);
         },
       ),
     );

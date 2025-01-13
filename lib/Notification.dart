@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const NotificationSettingsPage(),
-    );
-  }
-}
+// void main() {
+//   runApp(const MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: const NotificationSettingsPage(),
+//     );
+//   }
+// }
 
 class NotificationSettingsPage extends StatefulWidget {
   const NotificationSettingsPage({super.key});
@@ -25,7 +25,11 @@ class NotificationSettingsPage extends StatefulWidget {
 
 class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
   String notificationText = 'แจ้งเตือนเมื่อ AQI มากกว่า 50';
-
+  final pages = [
+    '/history', // เส้นทางของหน้าประวัติ
+    '/',        // เส้นทางของหน้าหลัก
+    '/more',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
+  ];
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> aqiLevels = [
@@ -117,6 +121,9 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
         ],
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          Navigator.pushNamed(context, pages[index]); // นำทางไปตามหน้าที่ตรงกับดัชนี
+        },
       ),
     );
   }

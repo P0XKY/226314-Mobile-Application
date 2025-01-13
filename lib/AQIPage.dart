@@ -5,20 +5,20 @@ class AQIPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text('Phayao Air'),
-        centerTitle: true,  // Centers the title
-        leading: IconButton(
-          icon:const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        centerTitle: true,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Phayao Air'),
+          ],
         ),
         actions: [
-          CircleAvatar(
-            backgroundColor: Colors.grey[300],
-            child:const Icon(Icons.person, color: Colors.blue),
+          IconButton(
+            icon: const Icon(Icons.person, color: Colors.black),
+            onPressed: () {
+              Navigator.pushNamed(context, '/Login');
+            },
           ),
-          const SizedBox(width: 8),
         ],
         bottom: PreferredSize(
           preferredSize:const Size.fromHeight(1.0),
