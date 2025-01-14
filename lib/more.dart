@@ -1,5 +1,6 @@
 import 'package:application/AQIPage.dart';
 import 'package:application/Notification.dart';
+import 'package:application/PhayaoAirPage.dart';
 import 'package:application/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -127,7 +128,15 @@ class AdditionalPage extends StatelessWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          Navigator.pushNamed(context, pages[index]); // นำทางไปตามหน้าที่ตรงกับดัชนี
+          if (index == 1) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const PhayaoAirPage()),
+                  (route) => false,
+            );
+          } else {
+            Navigator.pushNamed(context, pages[index]);
+          }
         },
       ),
     );

@@ -147,7 +147,15 @@ class PhayaoAirPage extends StatelessWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          Navigator.pushNamed(context, pages[index]); // นำทางไปตามหน้าที่ตรงกับดัชนี
+          if (index == 1) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const PhayaoAirPage()),
+                  (route) => false,
+            );
+          } else {
+            Navigator.pushNamed(context, pages[index]);
+          }
         },
       ),
     );

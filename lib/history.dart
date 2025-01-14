@@ -1,3 +1,4 @@
+import 'package:application/PhayaoAirPage.dart';
 import 'package:flutter/material.dart';
 
 class historyPage extends StatelessWidget {
@@ -155,7 +156,15 @@ class historyPage extends StatelessWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          Navigator.pushNamed(context, pages[index]); // นำทาง
+          if (index == 1) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const PhayaoAirPage()),
+                  (route) => false,
+            );
+          } else {
+            Navigator.pushNamed(context, pages[index]);
+          }
         },
       ),
     );
