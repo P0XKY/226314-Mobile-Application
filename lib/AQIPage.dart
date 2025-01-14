@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AQIPage extends StatelessWidget {
+  final pages = [
+    '/history', // เส้นทางของหน้าประวัติ
+    '/',        // เส้นทางของหน้าหลัก
+    '/more',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,15 +81,36 @@ class AQIPage extends StatelessWidget {
           ],
         ),
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const [
+      //     BottomNavigationBarItem(icon: Icon(Icons.history), label: 'ประวัติ'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'หน้าหลัก'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'เพิ่มเติม'),
+      //   ],
+      //   currentIndex: 1,
+      //   onTap: (index) {
+      //     Navigator.pop(context);
+      //   },
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'ประวัติ'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'หน้าหลัก'),
-          BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'เพิ่มเติม'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'ประวัติ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'หน้าหลัก',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.grid_view),
+            label: 'เพิ่มเติม',
+          ),
         ],
-        currentIndex: 1,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
         onTap: (index) {
-          Navigator.pop(context);
+          Navigator.pushNamed(context, pages[index]); // นำทางไปตามหน้าที่ตรงกับดัชนี
         },
       ),
     );

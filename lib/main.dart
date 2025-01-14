@@ -3,6 +3,7 @@ import 'package:application/Home.dart';
 import 'package:application/Longin.dart';
 import 'package:application/PhayaoAirPage.dart';
 import 'package:application/contact.dart';
+import 'package:application/history.dart';
 import 'package:application/more.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const PhayaoAirPage(),
+        '/history': (context) => const historyPage(),
         '/Login': (context) => const LoginPage(),
         '/more': (context) => AdditionalPage(),
 
