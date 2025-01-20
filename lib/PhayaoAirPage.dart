@@ -1,7 +1,74 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class PhayaoAirPage extends StatelessWidget {
-  const PhayaoAirPage({super.key});
+class PhayaoAirPage extends StatefulWidget {
+  @override
+  _PhayaoAirPageState createState() => _PhayaoAirPageState();
+}
+
+
+class _PhayaoAirPageState extends State<PhayaoAirPage> {
+
+  // const PhayaoAirPage({super.key});
+
+  Map<String, dynamic>? iqAirData;
+  Map<String, dynamic>? cmuCCDCData;
+
+  Future<void> fetchData() async {
+    final iqAir = await fetchDataFromIQAir();
+    final cmuCCDC = await fetchDataFromCMUCCDC();
+
+    setState(() {
+      iqAirData = iqAir;
+      cmuCCDCData = cmuCCDC;
+    });
+  }
+
+  Future<Map<String, dynamic>?> fetchDataFromIQAir() async {
+    final String apiKey = ''; // ใส่ API Key ของคุณ
+    final String url = 'http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=$apiKey';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['data']; // ส่งข้อมูลที่ต้องการกลับไป
+      } else {
+        print('Error from IQAir API: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching IQAir API: $e');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> fetchDataFromCMUCCDC() async {
+    final String url = 'https://www.cmuccdc.org/api/ccdc/value/3256';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data; // ส่งข้อมูลที่ต้องการกลับไป
+      } else {
+        print('Error from CMU CCDC API: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching CMU CCDC API: $e');
+      return null;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +96,9 @@ class PhayaoAirPage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: iqAirData == null || cmuCCDCData == null
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
@@ -50,11 +119,11 @@ class PhayaoAirPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '40',
+                            '${iqAirData?['current']['pollution']['aqius']}',
                             style: TextStyle(
                                 fontSize: 48,
                                 fontWeight: FontWeight.bold,
@@ -67,9 +136,9 @@ class PhayaoAirPage extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        'ดี',
+                        '${cmuCCDCData?['us_title']}',
                         style: TextStyle(
-                            fontSize: 32,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.green[700]),
                       ),
@@ -85,23 +154,23 @@ class PhayaoAirPage extends StatelessWidget {
                 InfoCard(
                   icon: Icons.cloud,
                   title: 'PM 2.5',
-                  value: '4.9 µg/m³',
+                  value: '${cmuCCDCData?['pm25']} µg/m³',
                 ),
                 InfoCard(
                   icon: Icons.thermostat,
                   title: 'Temperature',
-                  value: '32 °C',
+                  value: '${cmuCCDCData?['temp']} °C',
                 ),
                 InfoCard(
                   icon: Icons.water_drop,
                   title: 'Humidity',
-                  value: '52%',
+                  value: '${cmuCCDCData?['humid']}%',
                 ),
               ],
             ),
             const SizedBox(height: 16),
             Text(
-              'อัปเดตล่าสุด 1 มกราคม 2025\nเวลา 15:00 น.',
+              '${cmuCCDCData?['log_datetime']}',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
@@ -113,13 +182,13 @@ class PhayaoAirPage extends StatelessWidget {
               ),
               margin: const EdgeInsets.fromLTRB(0, 60, 0, 0),
               padding:const EdgeInsets.all(40),
-              child:const Row(
+              child: Row(
                 children: [
                   Icon(Icons.person, color: Colors.green, size: 48),
                   SizedBox(width: 16),
                   Expanded(
                     child: Text(
-                      'คุณภาพอากาศน่าพึงพอใจและไม่มีความเสี่ยง',
+                      '${cmuCCDCData?['th_caption']}',
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
@@ -150,7 +219,7 @@ class PhayaoAirPage extends StatelessWidget {
           if (index == 1) {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const PhayaoAirPage()),
+              MaterialPageRoute(builder: (context) => PhayaoAirPage()),
                   (route) => false,
             );
           } else {
