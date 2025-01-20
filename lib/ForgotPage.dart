@@ -10,6 +10,7 @@ class ForgotPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Forgot Password'),
+        backgroundColor: Colors.blue[50],
       ),
       backgroundColor: Colors.lightBlue[50],
       body: Center(
@@ -34,7 +35,10 @@ class ForgotPage extends StatelessWidget {
             children: [
               const Text(
                 'Reset Your Password',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue),
               ),
               const SizedBox(height: 20),
               TextField(

@@ -28,7 +28,7 @@ class SignUpPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Sing up',
+                'Sign up',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
               ),
               const SizedBox(height: 30),
@@ -78,7 +78,7 @@ class SignUpPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Sing in'),
+                    child: const Text('Sign in'),
                   ),
                 ],
               ),

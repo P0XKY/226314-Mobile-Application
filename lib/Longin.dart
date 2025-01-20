@@ -26,7 +26,10 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue[50],
+      appBar: AppBar(title: Text("Sign in"),
+      backgroundColor: Colors.blue[50],
+      ),
+      backgroundColor: Colors.blue[50],
       body: Center(
         child: Container(
           width: 350,
@@ -103,7 +106,7 @@ class LoginPage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => const SignUpPage()),
                       );
                     },
-                    child: const Text('Sing up'),
+                    child: const Text('Sign up'),
                   ),
                 ],
               ),

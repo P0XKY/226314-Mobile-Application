@@ -8,11 +8,15 @@ class ResetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Reset Password"),
+        backgroundColor: Colors.blue[50],
+        ),
       backgroundColor: Colors.lightBlue[50],
       body: Center(
         child: Container(
           width: 350,
-          height: 450,
+          height: 400,
           padding: const EdgeInsets.all(15.15), // ระยะห่างภายในกล่อง
           decoration: BoxDecoration(
             color: Colors.white, // สีพื้นหลังของกล่อง
@@ -69,7 +73,7 @@ class ResetPage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
-                    child: const Text('Sing in'),
+                    child: const Text('Sign in'),
                   ),
                 ],
               ),
