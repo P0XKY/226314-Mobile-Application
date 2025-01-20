@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'Sing in',
+                'Sign in',
                 style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,

@@ -10,7 +10,7 @@ class SignUpPage extends StatelessWidget {
       body: Center(
         child: Container(
           width: 350,
-          height: 600,
+          height: 550,
           padding: const EdgeInsets.all(15.15), // ระยะห่างภายในกล่อง
           decoration: BoxDecoration(
             color: Colors.white, // สีพื้นหลังของกล่อง
@@ -32,13 +32,6 @@ class SignUpPage extends StatelessWidget {
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
               ),
               const SizedBox(height: 30),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-                ),
-              ),
-              const SizedBox(height: 16),
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Username',
