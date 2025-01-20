@@ -26,74 +26,94 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('โปรไฟล์'),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.black),
-            onPressed: () {
-              Navigator.pushNamed(context, '/Login');
-            },
-          ),
-        ],
+        title: const Text('โปรไฟล์', style: TextStyle(fontWeight: FontWeight.bold)),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.0),
           child: Container(
-            color: Colors.grey,
+            color: Colors.grey[300],
             height: 1.0,
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Center(
-            child: Container(
-              margin: const EdgeInsets.all(16.0),
-              width: 100.0, // กำหนดขนาดรูปภาพ
-              height: 100.0,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage('assets/images/profile.jpg'), // เปลี่ยนเป็นพาธรูปของคุณ
-                  fit: BoxFit.cover,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            // รูปโปรไฟล์
+            Center(
+              child: Container(
+                margin: const EdgeInsets.all(16.0),
+                width: 120.0,
+                height: 120.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/profile.jpg'), // เปลี่ยนเป็นพาธรูปของคุณ
+                    fit: BoxFit.cover,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4), // Change the shadow position
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),// เพิ่มรูปภาพตรงกลาง
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: const Row(
-              children: [
-                Text(
-                  'ข้อมูลส่วนตัว',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
+            // ข้อมูลส่วนตัว
+            const Text(
+              'ข้อมูลส่วนตัว',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-          const ListTile(
-            title: Text('ชื่อผู้ใช้: John Doe'),
-            leading: Icon(Icons.person, color: Colors.blue),
-          ),
-          const Divider(),
-          const ListTile(
-            title: Text('อีเมล: john.doe@example.com'),
-            leading: Icon(Icons.email, color: Colors.orange),
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text('เปลี่ยนรหัสผ่าน'),
-            leading: const Icon(Icons.lock, color: Colors.red),
-            trailing: const Icon(Icons.arrow_forward, color: Colors.green),
-            onTap: () {
-              // Navigate to the Change Password page
-            },
-          ),
-        ],
+            const SizedBox(height: 10),
+            const ListTile(
+              title: Text('ชื่อผู้ใช้: John Doe'),
+              leading: Icon(Icons.person, color: Colors.blue),
+            ),
+            const Divider(),
+            const ListTile(
+              title: Text('อีเมล: john.doe@example.com'),
+              leading: Icon(Icons.email, color: Colors.orange),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('เปลี่ยนรหัสผ่าน'),
+              leading: const Icon(Icons.lock, color: Colors.red),
+              trailing: const Icon(Icons.arrow_forward, color: Colors.green),
+              onTap: () {
+                // Navigate to the Change Password page
+              },
+            ),
+            const Divider(),
+            // ปุ่มสำหรับ logout
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/Login');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // เปลี่ยนสีพื้นหลังของปุ่ม
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                icon: const Icon(Icons.logout, color: Colors.white),
+                label: const Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
