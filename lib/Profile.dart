@@ -116,7 +116,7 @@ class ProfilePage extends StatelessWidget {
           if (index == 1) {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const PhayaoAirPage()),
+              MaterialPageRoute(builder: (context) => PhayaoAirPage()),
                   (route) => false,
             );
           } else if (index == 0) {

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "273630131209",
+    "project_id": "appaqi-e0534",
+    "storage_bucket": "appaqi-e0534.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273630131209:android:c0ba1a5e5cf24b92fd74d8",
+        "android_client_info": {
+          "package_name": "com.example.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUbr-xWQcWmhkXRdlXAom9UBsr6SmbKU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273630131209:android:50ed3aac6ba7dfeffd74d8",
+        "android_client_info": {
+          "package_name": "com.example.te"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUbr-xWQcWmhkXRdlXAom9UBsr6SmbKU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

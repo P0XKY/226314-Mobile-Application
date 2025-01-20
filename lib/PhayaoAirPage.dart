@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -26,7 +27,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
   }
 
   Future<Map<String, dynamic>?> fetchDataFromIQAir() async {
-    final String apiKey = ''; // ใส่ API Key ของคุณ
+    final String apiKey = '274c95bd-2bb3-448f-b915-03477f596c5d'; // ใส่ API Key ของคุณ
     final String url = 'http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=$apiKey';
 
     try {
@@ -63,6 +64,40 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
       return null;
     }
   }
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Future<void> fetchAndSaveData() async {
+  //   final String apiKey = '274c95bd-2bb3-448f-b915-03477f596c5d'; // ใส่ API Key ของคุณ
+  //   final String url = 'http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=$apiKey';
+  //   try {
+  //     // ดึงข้อมูลจาก API
+  //     final response = await http.get(Uri.parse(url));
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //
+  //       // ข้อมูลที่ได้จาก API
+  //       final airQualityData = {
+  //         "city": data['data']['city'],
+  //         "aqi": data['data']['current']['pollution']['aqius'],
+  //         "pm25": data['data']['current']['pollution']['pm25'],
+  //         "temperature": data['data']['current']['weather']['tp'],
+  //         "humidity": data['data']['current']['weather']['hu'],
+  //         "timestamp": FieldValue.serverTimestamp(), // เก็บเวลาใน Firestore
+  //       };
+  //
+  //       // บันทึกข้อมูลลง Firestore
+  //       await _firestore.collection('air_quality').add(airQualityData);
+  //
+  //       print('Data saved successfully!');
+  //     } else {
+  //       print('Failed to fetch data: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //   }
+  // }
+
+
 
   @override
   void initState() {
