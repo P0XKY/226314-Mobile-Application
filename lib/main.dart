@@ -3,13 +3,21 @@ import 'package:application/Home.dart';
 import 'package:application/Longin.dart';
 import 'package:application/PhayaoAirPage.dart';
 import 'package:application/contact.dart';
-// import 'package:application/database.dart';
 import 'package:application/history.dart';
 import 'package:application/more.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp();
+    print('Firebase initialized successfully');
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+  }
   runApp(MyApp());
 }
 
