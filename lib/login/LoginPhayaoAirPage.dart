@@ -111,7 +111,8 @@ class _LoginPhayaoAirPageState extends State<LoginPhayaoAirPage> {
                       ),
                       const SizedBox(height: 8),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center, // จัดตำแหน่งในแนวแกนขวางให้อยู่กึ่งกลาง
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // เว้นระยะห่างระหว่างคอลัมน์
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,25 +120,33 @@ class _LoginPhayaoAirPageState extends State<LoginPhayaoAirPage> {
                               Text(
                                 '${iqAirData['iqair_aqi']}',
                                 style: TextStyle(
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.bold,
-                                    color: getAqiColor(aqi)),
+                                  fontSize: 48,
+                                  fontWeight: FontWeight.bold,
+                                  color: getAqiColor(aqi), // สีขึ้นกับค่าที่ส่งมา
+                                ),
                               ),
+                              const SizedBox(height: 4), // เพิ่มช่องว่างระหว่างข้อความ
                               const Text(
-                                '       AQI',
-                                style: TextStyle(fontSize: 16),
+                                'AQI',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
                             ],
                           ),
-                          Text(
-                            '${cmuCCDCData['cmuccdc_location']}',
-                            style: const TextStyle(
+                          const SizedBox(width: 16), // เพิ่มช่องว่างระหว่าง Column และข้อความ
+                          Expanded(
+                            child: Text(
+                              '${cmuCCDCData['cmuccdc_location']}',
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color:Colors.black),
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ),
