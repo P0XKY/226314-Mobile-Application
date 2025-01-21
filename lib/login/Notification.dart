@@ -26,9 +26,9 @@ class NotificationSettingsPage extends StatefulWidget {
 class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
   String notificationText = 'แจ้งเตือนเมื่อ AQI มากกว่า 50';
   final pages = [
-    '/history', // เส้นทางของหน้าประวัติ
-    '/',        // เส้นทางของหน้าหลัก
-    '/more',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
+    '/loginhistory', // เส้นทางของหน้าประวัติ
+    '/LoginPhayaoAirPage',        // เส้นทางของหน้าหลัก
+    '/Loginmore',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
   ];
   @override
   Widget build(BuildContext context) {

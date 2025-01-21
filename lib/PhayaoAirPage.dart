@@ -110,6 +110,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.grey),
         elevation: 0,
+        automaticallyImplyLeading: false, // ปิดปุ่มย้อนกลับใน AppBar
         actions: [
           IconButton(
             icon: const Icon(Icons.person, color: Colors.grey),

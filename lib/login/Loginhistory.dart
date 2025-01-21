@@ -161,9 +161,9 @@ class Loginhistory extends StatelessWidget {
         unselectedItemColor: Colors.grey, // สีของปุ่มที่ไม่ได้เลือก
         onTap: (index) {
           if (index == 1) {
-            Navigator.pushNamed(context, '/');
+            Navigator.pushNamed(context, '/LoginPhayaoAirPage');
           } else if (index == 2) {
-            Navigator.pushNamed(context, '/more');
+            Navigator.pushNamed(context, '/Loginmore');
           }
         },
       ),

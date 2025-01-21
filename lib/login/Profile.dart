@@ -1,4 +1,4 @@
-import 'package:application/PhayaoAirPage.dart';
+import 'package:application/login/LoginPhayaoAirPage.dart';
 import 'package:flutter/material.dart';
 
 
@@ -118,13 +118,13 @@ class ProfilePage extends StatelessWidget {
           if (index == 1) {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => PhayaoAirPage()),
+              MaterialPageRoute(builder: (context) => LoginPhayaoAirPage()),
                   (route) => false,
             );
           } else if (index == 0) {
-            Navigator.pushNamed(context, '/history');
+            Navigator.pushNamed(context, '/Loginhistory');
           } else {
-            Navigator.pushNamed(context, '/more');
+            Navigator.pushNamed(context, '/Longinmore');
           }
         },
       ),

@@ -1,11 +1,7 @@
+import 'package:application/login/LoginPhayaoAirPage.dart';
 import 'package:flutter/material.dart';
 
-class ContactPage extends StatelessWidget {
-  final pages = [
-    '/Loginhistory',
-    '/LoginPhayaoAirPage',
-    '/Loginmore',
-  ];
+class LogincontactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +17,7 @@ class ContactPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person, color: Colors.black),
             onPressed: () {
-              Navigator.pushNamed(context, '/Login');
+              Navigator.pushNamed(context, '/profile');
             },
           ),
         ],
@@ -117,8 +113,18 @@ class ContactPage extends StatelessWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          Navigator.pushNamed(context, pages[index]); // นำทางไปตามหน้าที่ตรงกับดัชนี
-        },
+          if (index == 1) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPhayaoAirPage()),
+                  (route) => false,
+            );
+          } else if (index == 0) {
+            Navigator.pushNamed(context, '/Loginhistory');
+          } else {
+            Navigator.pushNamed(context, '/Longinmore');
+          }
+        },// นำทางไปตามหน้าที่ตรงกับดัชนี
       ),
     );
   }

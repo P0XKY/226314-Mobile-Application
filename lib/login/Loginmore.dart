@@ -1,6 +1,7 @@
 import 'package:application/AQIPage.dart';
+import 'package:application/login/LoginPhayaoAirPage.dart';
+import 'package:application/login/Logincontact.dart';
 import 'package:application/login/Notification.dart';
-import 'package:application/PhayaoAirPage.dart';
 import 'package:application/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +10,9 @@ import 'package:flutter/material.dart';
 
 class Loginmore extends StatelessWidget {
   final pages = [
-    '/history', // เส้นทางของหน้าประวัติ
-    '/',        // เส้นทางของหน้าหลัก
-    '/more',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
+    '/Loginhistory', // เส้นทางของหน้าประวัติ
+    '/LoginPhayaoAirPage',        // เส้นทางของหน้าหลัก
+    '/Loginmore',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
   ];
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class Loginmore extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person, color: Colors.black),
             onPressed: () {
-              Navigator.pushNamed(context, '/Login');
+              Navigator.pushNamed(context, '/profile');
             },
           ),
         ],
@@ -86,7 +87,7 @@ class Loginmore extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ContactPage()),
+                MaterialPageRoute(builder: (context) => LogincontactPage()),
               );
             },
           ),
@@ -128,15 +129,7 @@ class Loginmore extends StatelessWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          if (index == 1) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => PhayaoAirPage()),
-                  (route) => false,
-            );
-          } else {
-            Navigator.pushNamed(context, pages[index]);
-          }
+          Navigator.pushNamed(context, pages[index]); // นำทางไปตามหน้าที่ตรงกับดัชนี
         },
       ),
     );

@@ -21,7 +21,7 @@ class AQIPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person, color: Colors.black),
             onPressed: () {
-              Navigator.pushNamed(context, '/Login');
+              Navigator.pushNamed(context, '/profile');
             },
           ),
         ],
