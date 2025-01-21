@@ -68,18 +68,6 @@ class AdditionalPage extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            title: const Text('การตั้งค่าการแจ้งเตือน'),
-            leading: const Icon(Icons.notifications, color: Colors.orange),  // Added color here
-            trailing: const Icon(Icons.arrow_forward, color: Colors.green),  // Added color here
-            onTap: () {
-              Navigator.push(
-                  context,
-              MaterialPageRoute(builder: (context) => const NotificationSettingsPage()),
-              );
-            },
-          ),
-          const Divider(),
-          ListTile(
             title: const Text('ข้อมูลติดต่อ'),
             leading: const Icon(Icons.contact_phone, color: Colors.purple),  // Added color here
             trailing: const Icon(Icons.arrow_forward, color: Colors.green),  // Added color here

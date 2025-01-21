@@ -1,4 +1,4 @@
-import 'package:application/PhayaoAirPage.dart';
+import 'package:application/login/LoginPhayaoAirPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => PhayaoAirPage()),
+          MaterialPageRoute(builder: (context) => LoginPhayaoAirPage()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -4,59 +4,49 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-class PhayaoAirPage extends StatefulWidget {
+class LoginPhayaoAirPage extends StatefulWidget {
   @override
-  _PhayaoAirPageState createState() => _PhayaoAirPageState();
+  _LoginPhayaoAirPageState createState() => _LoginPhayaoAirPageState();
 }
 
-class _PhayaoAirPageState extends State<PhayaoAirPage> {
+class _LoginPhayaoAirPageState extends State<LoginPhayaoAirPage> {
   Map<String, dynamic>? iqAirData;
   Map<String, dynamic>? cmuCCDCData;
 
   @override
   void initState() {
     super.initState();
-    // Set a timer to run fetchDataAndSave every 5 minutes (300 seconds)
     Timer.periodic(Duration(minutes: 5), (Timer t) {
       fetchDataAndSave();
     });
-
-    // Run it once when the app starts
     fetchDataAndSave();
   }
 
   Future<void> fetchDataAndSave() async {
     try {
-      // เรียกใช้ฟังก์ชัน saveDataToFirestore
       await saveDataToFirestore();
     } catch (e) {
       print("Error: $e");
     }
   }
 
-  //ดึงข้อมูล API IQAIR
   Future<Map<String, dynamic>> fetchAirQualityData() async {
     final response = await http.get(
       Uri.parse('http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=274c95bd-2bb3-448f-b915-03477f596c5d'),
     );
-
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
       return jsonDecode(response.body);
     } else {
-      // If the server does not return a 200 OK response, throw an exception.
       throw Exception('Failed Firebase IQAIR');
     }
   }
 
-  /// ดึงข้อมูลจาก API CMU CCDC
   Future<Map<String, dynamic>> fetchAirQualityDataCMU() async {
     final response = await http.get(
       Uri.parse('https://www.cmuccdc.org/api/ccdc/value/3256'),
     );
-
     if (response.statusCode == 200) {
-      return jsonDecode(response.body); // แปลง JSON เป็น Map
+      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to fetch data from CMU CCDC');
     }
@@ -66,92 +56,50 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     try {
-      // ดึงข้อมูลจากทั้งสอง API
       final iqAirData = await fetchAirQualityData();
       final cmuCCDCData = await fetchAirQualityDataCMU();
 
-      // สร้างเอกสารใน Firestore
       await firestore.collection('air_quality').add({
-        // ข้อมูลจาก IQAir API
         'iqair_city': iqAirData['data']['city'],
         'iqair_state': iqAirData['data']['state'],
         'iqair_country': iqAirData['data']['country'],
         'iqair_aqi': iqAirData['data']['current']['pollution']['aqius'],
         'iqair_temperature': iqAirData['data']['current']['weather']['tp'],
         'iqair_humidity': iqAirData['data']['current']['weather']['hu'],
-
-        // ข้อมูลจาก CMU CCDC API
         'cmuccdc_pm25': cmuCCDCData['pm25'],
         'cmuccdc_location': cmuCCDCData['us_title'],
         'cmuccdc_caption': cmuCCDCData['th_caption'],
         'cmuccdc_log_datetime': cmuCCDCData['log_datetime'],
-
-        // บันทึกเวลาที่บันทึกข้อมูลลง Firestore
         'timestamp': FieldValue.serverTimestamp(),
       });
-
       print("Data saved to Firestore");
     } catch (error) {
       print("Failed to save data to Firestore: $error");
     }
   }
 
-  // Future<void> fetchData() async {
-  //   final iqAir = await fetchDataFromIQAir();
-  //   final cmuCCDC = await fetchDataFromCMUCCDC();
-  //
-  //   setState(() {
-  //     iqAirData = iqAir;
-  //     cmuCCDCData = cmuCCDC;
-  //   });
-  // }
-  //
-  // Future<Map<String, dynamic>?> fetchDataFromIQAir() async {
-  //   final String apiKey = '274c95bd-2bb3-448f-b915-03477f596c5d'; // ใส่ API Key ของคุณ
-  //   final String url = 'http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=$apiKey';
-  //
-  //   try {
-  //     final response = await http.get(Uri.parse(url));
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       return data['data']; // ส่งข้อมูลที่ต้องการกลับไป
-  //     } else {
-  //       print('Error from IQAir API: ${response.statusCode}');
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching IQAir API: $e');
-  //     return null;
-  //   }
-  // }
-  //
-  // Future<Map<String, dynamic>?> fetchDataFromCMUCCDC() async {
-  //   final String url = 'https://www.cmuccdc.org/api/ccdc/value/3256';
-  //
-  //   try {
-  //     final response = await http.get(Uri.parse(url));
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       return data; // ส่งข้อมูลที่ต้องการกลับไป
-  //     } else {
-  //       print('Error from CMU CCDC API: ${response.statusCode}');
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching CMU CCDC API: $e');
-  //     return null;
-  //   }
-  // }
+  Color getAqiColor(int aqi) {
+    if (aqi <= 50) {
+      return Colors.green;
+    } else if (aqi <= 100) {
+      return Colors.yellow;
+    } else if (aqi <= 150) {
+      return Colors.orange;
+    } else if (aqi <= 200) {
+      return Colors.red;
+    } else {
+      return Colors.purple;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final pages = [
-      '/history', // เส้นทางของหน้าประวัติ
-      '/', // เส้นทางของหน้าหลัก
-      '/more', // เส้นทางของหน้าข้อมูลเพิ่มเติม
+      '/Loginhistory',
+      '/LoginPhayaoAirPage',
+      '/Loginmore',
     ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -160,51 +108,65 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.grey),
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.person, color: Colors.black),
+            icon: const Icon(Icons.person, color: Colors.grey),
             onPressed: () {
-              Navigator.pushNamed(context, '/Login');
+              Navigator.pushNamed(context, '/profile');
             },
           ),
         ],
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('air_quality')/*.orderBy('timestamp', descending: true)*/.snapshots(), // ชื่อ collection จาก Firestore
+        stream: FirebaseFirestore.instance.collection('air_quality').snapshots(),
         builder: (context, snapshot) {
-          // เช็คสถานะการเชื่อมต่อ
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator()); // กำลังโหลดข้อมูล
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No Data Found')); // ไม่มีข้อมูล
+            return const Center(child: Text('No Data Found'));
           }
 
-          // ดึงข้อมูลจาก snapshot
-          final data = snapshot.data!.docs.first.data(); // ใช้ข้อมูลจากเอกสารแรกใน collection
-          final iqAirData = data; // สมมติว่า Firestore เก็บข้อมูล iqAirData โดยตรง
-          final cmuCCDCData = data; // ใช้ข้อมูลเดียวกัน (ถ้าข้อมูลแยกควรใช้ field ที่เหมาะสม)
+          final data = snapshot.data!.docs.first.data();
+          final iqAirData = data;
+          final cmuCCDCData = data;
+
+          int aqi = iqAirData['iqair_aqi'] ?? 0;
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
+                // AQI Card with Gradient Background
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.green[100],
+                    gradient: LinearGradient(
+                      colors: [
+                        getAqiColor(aqi).withOpacity(0.4),
+                        getAqiColor(aqi),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.grey.withOpacity(0.5), // Border color with opacity
+                      width: 0.5, // Border width
+                    ),
                   ),
-                  padding: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.all(30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'คุณภาพอากาศ',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      const Center(
+                        child: const Text(
+                          'คุณภาพอากาศ',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold ),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -214,24 +176,24 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${iqAirData['iqair_aqi']}', // เปลี่ยนให้แสดงค่าจาก Firestore
-                                style: const TextStyle(
+                                '${iqAirData['iqair_aqi']}',
+                                style: TextStyle(
                                     fontSize: 48,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.green),
+                                    color: getAqiColor(aqi)),
                               ),
                               const Text(
-                                'AQI',
+                                '       AQI',
                                 style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
                           Text(
-                            '${cmuCCDCData['cmuccdc_location']}', // เปลี่ยนให้แสดงค่าจาก Firestore
-                            style: TextStyle(
+                            '${cmuCCDCData['cmuccdc_location']}',
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.green[700]),
+                                color:Colors.black),
                           ),
                         ],
                       ),
@@ -249,7 +211,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                     ),
                     InfoCard(
                       icon: Icons.thermostat,
-                      title: 'Temperature',
+                      title: 'Temp',
                       value: '${cmuCCDCData['iqair_temperature']} °C',
                     ),
                     InfoCard(
@@ -261,27 +223,44 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  '${cmuCCDCData['cmuccdc_log_datetime']}', // ใช้ timestamp จาก Firestore
+                  '${cmuCCDCData['cmuccdc_log_datetime']}',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
+
                 const SizedBox(height: 16),
+                // Footer Section with Gradient
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.green[100],
+                    gradient: LinearGradient(
+                      colors: [
+                        getAqiColor(aqi).withOpacity(0.6),
+                        getAqiColor(aqi).withOpacity(1),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.grey.withOpacity(0.5),
+                      width: 0.5,
+                    ),
                   ),
                   margin: const EdgeInsets.fromLTRB(0, 60, 0, 0),
                   padding: const EdgeInsets.all(40),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.person, color: Colors.green, size: 48),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Text(
-                          '${cmuCCDCData['cmuccdc_caption']}', // แสดงข้อมูลเพิ่มเติม
-                          style: const TextStyle(fontSize: 16),
-                        ),
+                  child: Column(
+                    children: [Text("คำแนะนำ"),
+                      Row(
+                        children: [
+                          const Icon(Icons.person, color: Colors.green, size: 48),
+                          const SizedBox(width: 60),
+                          Expanded(
+                            child: Text(
+                              '${cmuCCDCData['cmuccdc_caption']}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -312,8 +291,8 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
           if (index == 1) {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => PhayaoAirPage()),
-              (route) => false,
+              MaterialPageRoute(builder: (context) => LoginPhayaoAirPage()),
+                  (route) => false,
             );
           } else {
             Navigator.pushNamed(context, pages[index]);
@@ -340,6 +319,10 @@ class InfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.withOpacity(0.5), // Border color with opacity
+          width: 0.5, // Border width
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -354,7 +337,7 @@ class InfoCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14, color: Colors.black),
             textAlign: TextAlign.center,
           ),
         ],

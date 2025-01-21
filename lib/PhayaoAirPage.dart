@@ -157,14 +157,16 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                       width: 0.5, // Border width
                     ),
                   ),
-                  padding: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.all(30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'คุณภาพอากาศ',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold ),
+                      const Center(
+                        child: const Text(
+                          'คุณภาพอากาศ',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold ),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -181,14 +183,14 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                                     color: getAqiColor(aqi)),
                               ),
                               const Text(
-                                'AQI',
+                                '       AQI',
                                 style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
                           Text(
                             '${cmuCCDCData['cmuccdc_location']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color:Colors.black),
@@ -209,7 +211,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                     ),
                     InfoCard(
                       icon: Icons.thermostat,
-                      title: 'Temperature',
+                      title: 'Temp',
                       value: '${cmuCCDCData['iqair_temperature']} °C',
                     ),
                     InfoCard(
@@ -225,6 +227,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
+
                 const SizedBox(height: 16),
                 // Footer Section with Gradient
                 Container(
@@ -245,15 +248,19 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                   ),
                   margin: const EdgeInsets.fromLTRB(0, 60, 0, 0),
                   padding: const EdgeInsets.all(40),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.person, color: Colors.green, size: 48),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Text(
-                          '${cmuCCDCData['cmuccdc_caption']}',
-                          style: const TextStyle(fontSize: 16),
-                        ),
+                  child: Column(
+                    children: [Text("คำแนะนำ"),
+                      Row(
+                        children: [
+                          const Icon(Icons.person, color: Colors.green, size: 48),
+                          const SizedBox(width: 60),
+                          Expanded(
+                            child: Text(
+                              '${cmuCCDCData['cmuccdc_caption']}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -331,7 +338,7 @@ class InfoCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
+            style: const TextStyle(fontSize: 14, color: Colors.black),
             textAlign: TextAlign.center,
           ),
         ],

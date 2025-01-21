@@ -1,12 +1,14 @@
-import 'package:application/AQIPage.dart';
-import 'package:application/Home.dart';
 import 'package:application/Longin.dart';
 import 'package:application/PhayaoAirPage.dart';
-import 'package:application/contact.dart';
 import 'package:application/history.dart';
 import 'package:application/more.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'login/LoginPhayaoAirPage.dart';
+import 'login/Loginhistory.dart';
+import 'login/Loginmore.dart';
+import 'login/Profile.dart';
 
 
 
@@ -41,7 +43,10 @@ class _MyApp extends State<MyApp> {
         '/history': (context) => HistoryPage(),
         '/Login': (context) => const LoginPage(),
         '/more': (context) => AdditionalPage(),
-
+        '/profile': (context) => ProfilePage(),
+        '/Loginhistory': (context) => Loginhistory(),
+        '/LoginPhayaoAirPage': (context) => LoginPhayaoAirPage(),
+        '/Loginmore': (context) => Loginmore()
       },
     );
   }

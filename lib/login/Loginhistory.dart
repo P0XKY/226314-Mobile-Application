@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatelessWidget {
+class Loginhistory extends StatelessWidget {
   // ฟังก์ชันในการเลือกสีของการ์ดตามค่า AQI
   Color _getAQIColor(int aqi) {
     if (aqi <= 50) {

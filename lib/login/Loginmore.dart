@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 
 
-class AdditionalPage extends StatelessWidget {
+class Loginmore extends StatelessWidget {
   final pages = [
     '/history', // เส้นทางของหน้าประวัติ
     '/',        // เส้นทางของหน้าหลัก
