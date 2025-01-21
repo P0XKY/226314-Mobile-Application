@@ -214,7 +214,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${iqAirData['aqi']}', // เปลี่ยนให้แสดงค่าจาก Firestore
+                                '${iqAirData['iqair_aqi']}', // เปลี่ยนให้แสดงค่าจาก Firestore
                                 style: const TextStyle(
                                     fontSize: 48,
                                     fontWeight: FontWeight.bold,
@@ -227,7 +227,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                             ],
                           ),
                           Text(
-                            '${cmuCCDCData['us_title']}', // เปลี่ยนให้แสดงค่าจาก Firestore
+                            '${cmuCCDCData['cmuccdc_location']}', // เปลี่ยนให้แสดงค่าจาก Firestore
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -245,23 +245,23 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                     InfoCard(
                       icon: Icons.cloud,
                       title: 'PM 2.5',
-                      value: '${cmuCCDCData['pm25']} µg/m³',
+                      value: '${cmuCCDCData['cmuccdc_pm25']} µg/m³',
                     ),
                     InfoCard(
                       icon: Icons.thermostat,
                       title: 'Temperature',
-                      value: '${cmuCCDCData['temperature']} °C',
+                      value: '${cmuCCDCData['iqair_temperature']} °C',
                     ),
                     InfoCard(
                       icon: Icons.water_drop,
                       title: 'Humidity',
-                      value: '${cmuCCDCData['humidity']} %',
+                      value: '${cmuCCDCData['iqair_humidity']} %',
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  '${cmuCCDCData['log_datetime']}', // ใช้ timestamp จาก Firestore
+                  '${cmuCCDCData['cmuccdc_log_datetime']}', // ใช้ timestamp จาก Firestore
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
@@ -279,7 +279,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
                       const SizedBox(width: 16),
                       Expanded(
                         child: Text(
-                          '${cmuCCDCData['th_caption']}', // แสดงข้อมูลเพิ่มเติม
+                          '${cmuCCDCData['cmuccdc_caption']}', // แสดงข้อมูลเพิ่มเติม
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),
