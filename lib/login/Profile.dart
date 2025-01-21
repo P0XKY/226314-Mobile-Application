@@ -1,3 +1,4 @@
+import 'package:application/ForgotPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,28 +41,28 @@ class ProfilePage extends StatelessWidget {
             return ListView(
               children: [
                 // รูปโปรไฟล์
-                Center(
-                  child: Container(
-                    margin: const EdgeInsets.all(16.0),
-                    width: 120.0,
-                    height: 120.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(userData['profilePicture'] ?? 'https://via.placeholder.com/120'), // URL รูป
-                        fit: BoxFit.cover,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // Center(
+                //   child: Container(
+                //     margin: const EdgeInsets.all(16.0),
+                //     width: 120.0,
+                //     height: 120.0,
+                //     decoration: BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       image: DecorationImage(
+                //         image: NetworkImage(userData['profilePicture'] ?? 'https://via.placeholder.com/120'), // URL รูป
+                //         fit: BoxFit.cover,
+                //       ),
+                //       boxShadow: [
+                //         BoxShadow(
+                //           color: Colors.grey.withOpacity(0.5),
+                //           spreadRadius: 2,
+                //           blurRadius: 8,
+                //           offset: const Offset(0, 4),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 // ข้อมูลส่วนตัว
                 const Text(
                   'ข้อมูลส่วนตัว',
@@ -83,7 +84,10 @@ class ProfilePage extends StatelessWidget {
                   leading: const Icon(Icons.lock, color: Colors.red),
                   trailing: const Icon(Icons.arrow_forward, color: Colors.green),
                   onTap: () {
-                    // Navigate to the Change Password page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ForgotPage()),
+                    );
                   },
                 ),
                 const Divider(),
