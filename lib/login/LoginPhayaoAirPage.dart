@@ -10,73 +10,9 @@ class LoginPhayaoAirPage extends StatefulWidget {
 }
 
 class _LoginPhayaoAirPageState extends State<LoginPhayaoAirPage> {
-  Map<String, dynamic>? iqAirData;
-  Map<String, dynamic>? cmuCCDCData;
+  // Map<String, dynamic>? iqAirData;
+  // Map<String, dynamic>? cmuCCDCData;
 
-  @override
-  void initState() {
-    super.initState();
-    Timer.periodic(Duration(minutes: 5), (Timer t) {
-      fetchDataAndSave();
-    });
-    fetchDataAndSave();
-  }
-
-  Future<void> fetchDataAndSave() async {
-    try {
-      await saveDataToFirestore();
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
-
-  Future<Map<String, dynamic>> fetchAirQualityData() async {
-    final response = await http.get(
-      Uri.parse('http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=274c95bd-2bb3-448f-b915-03477f596c5d'),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed Firebase IQAIR');
-    }
-  }
-
-  Future<Map<String, dynamic>> fetchAirQualityDataCMU() async {
-    final response = await http.get(
-      Uri.parse('https://www.cmuccdc.org/api/ccdc/value/3256'),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to fetch data from CMU CCDC');
-    }
-  }
-
-  Future<void> saveDataToFirestore() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    try {
-      final iqAirData = await fetchAirQualityData();
-      final cmuCCDCData = await fetchAirQualityDataCMU();
-
-      await firestore.collection('air_quality').add({
-        'iqair_city': iqAirData['data']['city'],
-        'iqair_state': iqAirData['data']['state'],
-        'iqair_country': iqAirData['data']['country'],
-        'iqair_aqi': iqAirData['data']['current']['pollution']['aqius'],
-        'iqair_temperature': iqAirData['data']['current']['weather']['tp'],
-        'iqair_humidity': iqAirData['data']['current']['weather']['hu'],
-        'cmuccdc_pm25': cmuCCDCData['pm25'],
-        'cmuccdc_location': cmuCCDCData['us_title'],
-        'cmuccdc_caption': cmuCCDCData['th_caption'],
-        'cmuccdc_log_datetime': cmuCCDCData['log_datetime'],
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-      print("Data saved to Firestore");
-    } catch (error) {
-      print("Failed to save data to Firestore: $error");
-    }
-  }
 
   Color getAqiColor(int aqi) {
     if (aqi <= 50) {

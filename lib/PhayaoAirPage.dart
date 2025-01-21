@@ -16,7 +16,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(minutes: 5), (Timer t) {
+    Timer.periodic(Duration(minutes: 60), (Timer t) {
       fetchDataAndSave();
     });
     fetchDataAndSave();
