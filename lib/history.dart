@@ -1,144 +1,148 @@
-import 'package:application/PhayaoAirPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class historyPage extends StatelessWidget {
-  const historyPage({super.key});
+class HistoryPage extends StatelessWidget {
+  // ฟังก์ชันในการเลือกสีของการ์ดตามค่า AQI
+  Color _getAQIColor(int aqi) {
+    if (aqi <= 50) {
+      return Colors.green[400]!; // AQI 0-50 สีเขียวเข้ม
+    } else if (aqi <= 100) {
+      return Colors.yellow[400]!; // AQI 51-100 สีเหลืองเข้ม
+    } else if (aqi <= 150) {
+      return Colors.orange[400]!; // AQI 101-150 สีส้มเข้ม
+    } else if (aqi <= 200) {
+      return Colors.red[400]!; // AQI 151-200 สีแดงเข้ม
+    } else {
+      return Colors.purple[400]!; // AQI > 200 สีม่วงเข้ม
+    }
+  }
+
+  // ฟังก์ชันในการเลือกไอคอนตามค่า AQI
+  IconData _getAQIIcon(int aqi) {
+    if (aqi <= 50) {
+      return Icons.sentiment_satisfied_alt; // Icon สีเขียว
+    } else if (aqi <= 100) {
+      return Icons.sentiment_neutral; // Icon สีเหลือง
+    } else if (aqi <= 150) {
+      return Icons.sentiment_dissatisfied; // Icon สีส้ม
+    } else if (aqi <= 200) {
+      return Icons.sentiment_very_dissatisfied; // Icon สีแดง
+    } else {
+      return Icons.warning; // Icon สีม่วง
+    }
+  }
+
+  // ฟังก์ชันในการเลือกสีข้อความ
+  Color _getTextColor(int aqi) {
+    if (aqi <= 50) {
+      return Colors.black; // สีข้อความดำ
+    } else if (aqi <= 100) {
+      return Colors.black; // สีข้อความดำ
+    } else if (aqi <= 150) {
+      return Colors.black; // สีข้อความขาว
+    } else if (aqi <= 200) {
+      return Colors.black; // สีข้อความขาว
+    } else {
+      return Colors.black; // สีข้อความขาว
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      '/history', // เส้นทางของหน้าประวัติ
-      '/',        // เส้นทางของหน้าหลัก
-      '/more',    // เส้นทางของหน้าข้อมูลเพิ่มเติม
-    ];
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title:const Text(
-          'Phayao Air',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person, color: Colors.black),
-            onPressed: () {
-              Navigator.pushNamed(context, '/Login');
-            },
-          ),
-        ],
+        title: const Text('History'),
+        backgroundColor: Colors.white, // เปลี่ยนสี AppBar เป็นขาว
+        iconTheme: const IconThemeData(color: Colors.black), // เปลี่ยนสีไอคอนใน AppBar เป็นสีดำ
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const Text(
-                'ประวัติ AQI',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.green[100],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              padding: const EdgeInsets.all(90),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('air_quality')
+            .orderBy('timestamp', descending: true)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center(child: Text('No data available.'));
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              final data = snapshot.data!.docs[index].data();
+              final aqi = data['iqair_aqi'] ?? 0; // ตรวจสอบว่า aqi เป็น null หรือไม่
+
+              return Card(
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        _getAQIColor(aqi).withOpacity(0.7), // สีเข้มขึ้น
+                        _getAQIColor(aqi), // สีเข้ม
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '',
-                            style: TextStyle(
-                                fontSize: 48,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green),
-                          ),
-                          Text(
-                            '',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        '',
-                        style: TextStyle(
-                            fontSize: 32,
+                      ListTile(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                        title: Text(
+                          '${data['iqair_city']} - AQI: $aqi',
+                          style: TextStyle(
+                            fontSize: 30, // Increased font size
                             fontWeight: FontWeight.bold,
-                            color: Colors.green[700]),
+                            color: _getTextColor(aqi), // ใช้สีข้อความตาม AQI
+                          ),
+                        ),
+                        subtitle: Text(
+                          'PM 2.5: ${data['cmuccdc_pm25']} µg/m³\n'
+                              'Location: ${data['cmuccdc_location']}\n'
+                              'Date: ${data['cmuccdc_log_datetime']}',
+                          style: TextStyle(
+                            fontSize: 16, // Increased font size for subtitle
+                            color: _getTextColor(aqi).withOpacity(0.7), // สีข้อความที่อ่อนกว่าสำหรับรายละเอียด
+                          ),
+                        ),
+                        leading: Icon(
+                          _getAQIIcon(aqi),
+                          size: 40,
+                          color: Colors.white, // ไอคอนขาวเพื่อความโดดเด่น
+                        ),
+                      ),
+                      Divider(color: Colors.grey[300], height: 1),  // เพิ่มเส้นแบ่งเล็กๆ
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Icon(Icons.location_on, color: Colors.blue, size: 20),
+                            SizedBox(width: 8),
+                            Text(
+                              data['cmuccdc_location'],
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 18), // Increased font size for location
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     InfoCard(
-            //       icon: Icons.cloud,
-            //       title: 'PM 2.5',
-            //       value: '4.9 µg/m³',
-            //     ),
-            //     InfoCard(
-            //       icon: Icons.thermostat,
-            //       title: 'Temperature',
-            //       value: '32 °C',
-            //     ),
-            //     InfoCard(
-            //       icon: Icons.water_drop,
-            //       title: 'Humidity',
-            //       value: '52%',
-            //     ),
-            //   ],
-            // ),
-            const SizedBox(height: 16),
-            // Text(
-            //   'อัปเดตล่าสุด 1 มกราคม 2025\nเวลา 15:00 น.',
-            //   textAlign: TextAlign.center,
-            //   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-            // ),
-            const SizedBox(height: 16),
-            const Text(
-              'ประวัติ PM 2.5',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.green[100],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              padding:const EdgeInsets.all(130),
-              child:const Row(
-                children: [
-                  //Icon(Icons.person, color: Colors.green, size: 48),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Text(
-                      '',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+                ),
+              );
+            },
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white, // เปลี่ยนสี BottomNavigationBar เป็นขาว
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
@@ -153,58 +157,15 @@ class historyPage extends StatelessWidget {
             label: 'เพิ่มเติม',
           ),
         ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black, // สีของปุ่มที่เลือก
+        unselectedItemColor: Colors.grey, // สีของปุ่มที่ไม่ได้เลือก
         onTap: (index) {
           if (index == 1) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => PhayaoAirPage()),
-                  (route) => false,
-            );
-          } else {
-            Navigator.pushNamed(context, pages[index]);
+            Navigator.pushNamed(context, '/');
+          } else if (index == 2) {
+            Navigator.pushNamed(context, '/more');
           }
         },
-      ),
-    );
-  }
-}
-
-class InfoCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String value;
-
-  InfoCard({required this.icon, required this.title, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 110,
-      margin: EdgeInsets.fromLTRB(6, 0, 6, 0),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 32, color: Colors.blue),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: const TextStyle(fontSize: 14),
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }

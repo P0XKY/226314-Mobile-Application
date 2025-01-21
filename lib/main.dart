@@ -38,7 +38,7 @@ class _MyApp extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => PhayaoAirPage(),
-        '/history': (context) => const historyPage(),
+        '/history': (context) => HistoryPage(),
         '/Login': (context) => const LoginPage(),
         '/more': (context) => AdditionalPage(),
 
