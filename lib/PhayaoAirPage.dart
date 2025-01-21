@@ -32,7 +32,7 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
 
   Future<Map<String, dynamic>> fetchAirQualityData() async {
     final response = await http.get(
-      Uri.parse('http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=274c95bd-2bb3-448f-b915-03477f596c5d'),
+      Uri.parse('http://api.airvisual.com/v2/city?city=Mae Ka&state=Phayao&country=Thailand&key=e22157db-193f-40df-ae76-a54c7844953e'),
     );
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -121,7 +121,11 @@ class _PhayaoAirPageState extends State<PhayaoAirPage> {
         ],
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('air_quality').snapshots(),
+        stream: FirebaseFirestore.instance
+          .collection('air_quality')
+          .orderBy('timestamp', descending: true) // จัดเรียงตามฟิลด์ timestamp จากใหม่ไปเก่า
+          .limit(1) // จำกัดให้ดึงเอกสารล่าสุดเพียง 1 รายการ
+          .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

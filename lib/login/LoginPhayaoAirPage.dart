@@ -57,7 +57,11 @@ class _LoginPhayaoAirPageState extends State<LoginPhayaoAirPage> {
         ],
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('air_quality').snapshots(),
+        stream: FirebaseFirestore.instance
+          .collection('air_quality')
+          .orderBy('timestamp', descending: true) // จัดเรียงตามฟิลด์ timestamp จากใหม่ไปเก่า
+          .limit(1) // จำกัดให้ดึงเอกสารล่าสุดเพียง 1 รายการ
+          .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
